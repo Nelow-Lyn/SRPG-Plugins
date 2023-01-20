@@ -76,11 +76,11 @@
                 }
             },
             pull: function (unit, targetUnit) {
-                var direction = this.getDirection(unit.getMapX(), unit.getMapY(), targetUnit.getMapX(), targetUnit.getMapY());
+                var direction = this.getDirection(targetUnit.getMapX(), targetUnit.getMapY(), unit.getMapX(), unit.getMapY());
                 var dynamicEvent = createObject(DynamicEvent);
                 var generator = dynamicEvent.acquireEventGenerator();
                 if (this.checkmove(unit, targetUnit)) {
-                    generator.unitSlide(targetUnit, direction, -3, SlideType.START, false);
+                    generator.unitSlide(targetUnit, direction, 3, SlideType.START, false);
                     generator.unitSlide(targetUnit, 0, 0, SlideType.UPDATEEND, false);
                     dynamicEvent.executeDynamicEvent();
                 }
