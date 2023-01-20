@@ -1,42 +1,54 @@
 
 // Plugin inspired by Goinza's unitcommand-skills plugin
-// If a player attacks with a weapon with the custom parameter
+// made by Nelow-Lyn
+// If a Unit attacks with a weapon with the custom parameter
 // { shoveAfterAttack : 1}
 // the target unit will be shoved away by a square
-// Overwritten UnitCommand.Attack._moveResult()
-// made by Nelow-Lyn
+// Works for both Players and Enemies/Allies now!
 
-UnitCommand.Attack._moveResult = function () {
-    if (this._preAttack.movePreAttackCycle() !== MoveResult.CONTINUE) {
-        var weapon = this._weaponSelectMenu.getSelectWeapon();
-        var targetUnit = this._posSelector.getSelectorTarget(false);
-        var unit = this.getCommandTarget();
-        if (weapon.custom.shoveAfterAttack === 1) {
-            shove(unit, targetUnit);
+
+(function () {
+    var NL_ShoveAfterBattle01 = PreAttack._pushFlowEntriesEnd;
+    PreAttack._pushFlowEntriesEnd = function (straightFlow) {
+        NL_ShoveAfterBattle01.call(this,straightFlow);
+        straightFlow.pushFlowEntry(shoveOrPullFlowEntry);
+    }
+
+    var shoveOrPullFlowEntry = defineObject(BaseFlowEntry,
+        {
+            enterFlowEntry: function (preAttack) {
+                //this._prepareMemberData(preAttack);
+                return this._completeMemberData(preAttack);
+            },
+
+            _checkDelete: function (unit) {
+
+            },
+            _completeMemberData: function (preAttack) {
+                var attackobject = preAttack.getCoreAttack().getAttackFlow().getAttackOrder()
+                var weapon = BattlerChecker.getBaseWeapon(preAttack.getAttackParam().unit);
+                if (weapon.custom.shoveAfterAttack === 1 && checkhit(attackobject)) {
+                    shove(preAttack.getAttackParam().unit, preAttack.getAttackParam().targetUnit);
+                    return EnterResult.OK;
+                }
+                return EnterResult.NOTENTER;
+            }
+            
         }
-        this.endCommandAction();
-        return MoveResult.END;
+    );
 
+    function shove(unit, targetUnit) {
+            var direction = PosChecker.getSideDirection(unit.getMapX(), unit.getMapY(), targetUnit.getMapX(), targetUnit.getMapY());
+            var dynamicEvent = createObject(DynamicEvent);
+            var generator = dynamicEvent.acquireEventGenerator();
+            if (checkmove(unit, targetUnit)) {
+                generator.unitSlide(targetUnit, direction, 3, SlideType.START, false);
+                generator.unitSlide(targetUnit, 0, 0, SlideType.UPDATEEND, false);
+                dynamicEvent.executeDynamicEvent();
+        }
     }
-    return MoveResult.CONTINUE;
-},
 
-
-function shove(unit, targetUnit) {
-    if (unit === null || targetUnit === null) {
-        return;
-    }
-    var direction = PosChecker.getSideDirection(unit.getMapX(), unit.getMapY(), targetUnit.getMapX(), targetUnit.getMapY());
-    var dynamicEvent = createObject(DynamicEvent);
-    var generator = dynamicEvent.acquireEventGenerator();
-    if (checkmove(unit, targetUnit)) {
-        generator.unitSlide(targetUnit, direction, 3, SlideType.START, false);
-        generator.unitSlide(targetUnit, 0, 0, SlideType.UPDATEEND, false);
-        dynamicEvent.executeDynamicEvent();
-    }
-}
-
-function checkmove(unit, targetUnit) {
+    function checkmove(unit, targetUnit) {
         var deltaX, deltaY; //Distance between the units
         var boundaryX, boundaryY; //Boundary of the map
         var targetX, targetY; //Position where the targetUnit would get if pushed
@@ -64,4 +76,22 @@ function checkmove(unit, targetUnit) {
             }
         }
         return movable;
-}
+    }
+
+    function checkhit(attackObject) {
+
+        var attackCount = attackObject.getEntryCount();
+        var i, unit, isHit;
+        attackObject.setCurrentIndex(0);
+        for (i = 0; i < attackCount; i++) {
+            isHit = attackObject.isCurrentHit();
+            unit = attackObject.getActiveUnit().getUnitType();
+            if (isHit && unit === 0) {
+                return true;
+            }
+            attackObject.nextOrder();
+        }
+        return false;
+    }
+
+})();
