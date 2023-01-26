@@ -1,5 +1,6 @@
 /**
- * This plugin changes how the real critical animation is played
+ * This plugin changes how the real critical animation of a mage
+ * is played.
  * Instead of playing the real critical on hit
  * it will now play the animation as its own thing
  * This should allow for better options to display
