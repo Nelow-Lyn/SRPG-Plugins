@@ -59,9 +59,12 @@ MapLayer.drawMapLayer = function () {
 var NL_mapColour02 = CurrentMap.prepareMap;
 CurrentMap.prepareMap = function () {
     NL_mapColour02.call(this);
-    if (root.getCurrentSession().getCurrentMapInfo().custom.mapColour.drawMapColour === true) {
-        MapColour._drawMapColourCheck = true;
-        MapColour._createIndexArray();
+    if (typeof root.getCurrentSession().getCurrentMapInfo().custom.mapColour !== 'undefined') {
+        if (root.getCurrentSession().getCurrentMapInfo().custom.mapColour.drawMapColour === true) {
+            MapColour._drawMapColourCheck = true;
+            MapColour._createIndexArray();
+        }
+
     }
 }
 
