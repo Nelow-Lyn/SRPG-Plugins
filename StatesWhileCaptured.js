@@ -6,6 +6,7 @@
  * StateTurnFlowEntry._getPlayerList
  */
 
+(function() {
 
 RecoveryAllFlowEntry._completeMemberData = function (turnChange) {
 	var i, unit, recoveryValue;
@@ -54,4 +55,5 @@ RecoveryAllFlowEntry._completeMemberData = function (turnChange) {
 
 StateTurnFlowEntry._getPlayerList = function () {
 	return PlayerList.getSortieDefaultList();
-}
+};
+})();

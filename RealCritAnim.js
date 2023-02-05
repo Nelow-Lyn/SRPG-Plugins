@@ -6,6 +6,9 @@
  * critical animations.
  *
  **/
+
+(function() {
+
 UIBattleLayout._showDamageAnime = function (battler, isCritical, isFinish) {
 	var pos, effect, isRight;
 	var anime = null;
@@ -63,4 +66,5 @@ MagicBattler._getMagicAnime = function () {
 	} else {
 		return weapon.getMagicAnime();
 	}
-}
+};
+})();

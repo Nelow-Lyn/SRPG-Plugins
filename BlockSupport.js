@@ -2,7 +2,7 @@
    Allows a Weapon to bypass the Defense gained by Support
    To enable it, give a Weapon the custom Parameter {blockSupport: 1}
  */
-
+(function() {
 var NL_BlockSupport01 = DamageCalculator.calculateDefense;
 
 DamageCalculator.calculateDefense = function (active, passive, weapon, isCritical, totalStatus, trueHitValue) {
@@ -31,3 +31,4 @@ DamageCalculator.calculateDefense = function (active, passive, weapon, isCritica
 
     
 };
+})();

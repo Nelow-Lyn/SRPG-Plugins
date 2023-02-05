@@ -3,7 +3,7 @@ Plugin by Nelow/Lyn
 Changes the drawing of the Class Sprite to be animated in the Unit window
 Overwrites UnitMenuTopWindow._drawUnitClass
 */
-
+(function() {
 UnitMenuTopWindow._unitCounter = null;
 
 UnitMenuTopWindow.setUnitMenuData = function () {
@@ -33,3 +33,4 @@ UnitMenuTopWindow._drawUnitClass = function (xBase, yBase) {
 	UnitRenderer.drawScrollUnit(this._unit, x, y, unitRenderParam);
 	TextRenderer.drawText(x + 45, y + 13, cls.getName(), length, color, font);
 };
+})();

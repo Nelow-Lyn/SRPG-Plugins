@@ -48,6 +48,8 @@
  * 
  * Plugin by Nelow/Lyn
  * */
+
+(function() {
 var NL_mapColour01 = MapLayer.drawMapLayer;
 MapLayer.drawMapLayer = function () {
     NL_mapColour01.call(this);
@@ -66,7 +68,7 @@ CurrentMap.prepareMap = function () {
         }
 
     }
-}
+};
 
 var MapColour = defineObject(BaseObject, {
 
@@ -165,4 +167,5 @@ var MapColour = defineObject(BaseObject, {
     _drawMapColour: function () {
         root.drawFadeLight(this._mapIndexArray, this._getColour(), this._getAlpha());
     }
-})
+});
+})();

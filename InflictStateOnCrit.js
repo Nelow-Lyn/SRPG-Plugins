@@ -3,7 +3,7 @@
 // then on a critical hit it will inflict that state with a 100% chance
 // example {inflictStateOnCrit: 1} will inflict the state with the id 1 on a critical hit.
 
-
+(function() {
 var TCG_inflictStateOnCrit = AttackEvaluator.HitCritical._checkStateAttack;
 AttackEvaluator.HitCritical._checkStateAttack = function (virtualActive, virtualPassive, attackEntry) {
 	TCG_inflictStateOnCrit.call(this, virtualActive, virtualPassive, attackEntry);
@@ -21,3 +21,4 @@ AttackEvaluator.HitCritical._checkStateAttack = function (virtualActive, virtual
 		virtualPassive.stateArray.push(state);
 	}
 };
+})();

@@ -4,7 +4,7 @@
 // It's also possible to add more class groups beyond the 3rd but that would require minimal changes to this plugin.
 // Specifically lines 28 and 82 would need to be expanded with another else if.
 // Also the Class up max count needs to be adjusted accordingly
-
+(function() {
 var TCG_ThirdClassGroup01 = ClassChangeSelectManager._checkGroup;
 ClassChangeSelectManager._checkGroup = function (unit, item) {
 	TCG_ThirdClassGroup01.call(this, unit, item);
@@ -99,3 +99,4 @@ ClassChangeChecker.getClassGroupId = function (unit, isMapCall) {
 
 	return classGroupId;
 };
+})();

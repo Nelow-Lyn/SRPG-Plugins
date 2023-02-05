@@ -22,7 +22,7 @@
 //		drawRaceIconId: 1
 // }
 // draws the Icon selected for Other
-
+(function() {
 var TCG_drawRaceIcon01 = UnitMenuTopWindow.drawWindowContent;
 UnitMenuTopWindow.drawWindowContent = function (x, y) {
 	TCG_drawRaceIcon01.call(this, x, y);
@@ -58,4 +58,4 @@ UnitMenuTopWindow._drawUnitRace = function (xBase, yBase) {
 
 	GraphicsRenderer.drawImage(x, y, handle, GraphicsType.ICON);
 };
-
+})();

@@ -11,7 +11,7 @@
  * secondAction: true means the unit gets a second action after the command, false disables this
  * hadCustomAction needs to be set to false or it wont work the first time
  */
-
+(function() {
 var NL_FreeUnitEventCommand01 = UnitCommand.UnitEvent
 UnitCommand.UnitEvent._moveEvent = function () {
 	var result = MoveResult.CONTINUE;
@@ -46,4 +46,5 @@ UnitCommand.UnitEvent.isCommandDisplayable = function () {
 		return false;
 	}
 	return value;
-}
+};
+})();
