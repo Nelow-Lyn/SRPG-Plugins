@@ -61,14 +61,57 @@ MapLayer.drawMapLayer = function () {
 var NL_mapColour02 = CurrentMap.prepareMap;
 CurrentMap.prepareMap = function () {
     NL_mapColour02.call(this);
-    if (typeof root.getCurrentSession().getCurrentMapInfo().custom.mapColour !== 'undefined') {
+    var map = root.getCurrentSession().getCurrentMapInfo();
+    if (map === null) {
+        return;
+    }
+    if (typeof map === 'object' && typeof map.custom.mapColour !== 'undefined') {
         if (root.getCurrentSession().getCurrentMapInfo().custom.mapColour.drawMapColour === true) {
             MapColour._drawMapColourCheck = true;
             MapColour._createIndexArray();
         }
 
     }
-};
+    };
+
+    var NL_mapColour03 = LoadSaveScreen._executeLoad;
+
+    LoadSaveScreen._executeLoad = function () {
+        NL_mapColour03.call(this);
+        var map = root.getCurrentSession().getCurrentMapInfo();
+        if (map !== null || typeof map !== 'undefined') {
+            var global = root.getMetaSession().global;
+            if (map !== null && typeof map.custom.mapColour !== 'undefined') {
+                map.custom.mapColour.drawMapColour = global.mapColourCheck;
+                map.custom.mapColour.colour = global.mapColour;
+                map.custom.mapColour.alpha = global.alpha;
+                map.custom.mapColour.startX = global.startX;
+                map.custom.mapColour.startY = global.startY;
+                map.custom.mapColour.endX = global.endX;
+                map.custom.mapColour.endY = global.endY;
+            }
+        }
+    }
+
+    var NL_mapColour04 = LoadSaveScreen._executeSave;
+    LoadSaveScreen._executeSave = function () {
+        var map = root.getCurrentSession().getCurrentMapInfo();
+        if (map !== null || typeof map !== 'undefined') {
+            var global = root.getMetaSession().global;
+            if (map !== null && typeof map.custom.mapColour !== 'undefined') {
+                global.mapColourCheck = map.custom.mapColour.drawMapColour;
+                global.mapColour = map.custom.mapColour.colour;
+                global.alpha = map.custom.mapColour.alpha;
+                global.startX = map.custom.mapColour.startX;
+                global.startY = map.custom.mapColour.startY;
+                global.endX = map.custom.mapColour.endX;
+                global.endY = map.custom.mapColour.endY;
+            }
+        }
+
+        NL_mapColour04.call(this);
+    }
+})();
 
 var MapColour = defineObject(BaseObject, {
 
@@ -168,4 +211,4 @@ var MapColour = defineObject(BaseObject, {
         root.drawFadeLight(this._mapIndexArray, this._getColour(), this._getAlpha());
     }
 });
-})();
+
