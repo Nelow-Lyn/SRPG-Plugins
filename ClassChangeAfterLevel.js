@@ -265,7 +265,6 @@
 				}
 				for (i = 0; i < count; i++) {
 					param.setAssistValue(i, paramArray[i]);
-					root.log(parameter.getAssistValue(i));
 				}
 				if (this._skipCheck) {
 					return paramArray;
