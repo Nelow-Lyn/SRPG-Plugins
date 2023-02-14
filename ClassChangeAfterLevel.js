@@ -22,6 +22,8 @@
  * parameterArray: {hp:1, str: 1, mag:1, skl: 2, spd: 0, lck: 2, def: 1, res: 1, mov:1, wlv:0, bld:0}}
  * 
  *
+ * Version 1.01 : Fixed playing an animation even when no custom parameters were set.
+ * 
  * Plugin by Nelow/Lyn
  */
 
@@ -50,24 +52,23 @@
 			enterFlowEntry: function (coreAttack) {
 				var attackFlow = coreAttack.getAttackFlow();
 				var order = attackFlow.getAttackOrder();
-
 				this._coreAttack = coreAttack;
 				this._unit = attackFlow.getPlayerUnit();
 				var generator;
 				var attackFlow = coreAttack.getAttackFlow();
-				if (this._coreAttack.isRealBattle()) {
-					this._changeClassAnime();
-				}
+
 
 				if (typeof this._unit.custom.classChangeLevel === 'undefined' || this._unit.custom.classChangeLevel.reachedLevel !== true) {
 					return EnterResult.NOTENTER;
 				}
-
+				if (this._coreAttack.isRealBattle()) {
+					this._changeClassAnime();
+				}
 				if (this.isFlowSkip() || coreAttack.isBattleCut()) {
 					this._doSkipAction();
 					return EnterResult.NOTENTER;
 				}
-
+				
 				this._dynamicEvent = createObject(DynamicEvent);
 				generator = this._dynamicEvent.acquireEventGenerator();
 
@@ -85,7 +86,7 @@
 			moveFlowEntry: function () {
 				var mode = this.getCycleMode();
 				var result = MoveResult.CONTINUE;
-
+				
 				if (mode === ClassChangeLevelUpMode.ANIME) {
 					result = this._moveAnime();
 				}
@@ -96,7 +97,6 @@
 			},
 
 			_classChangeEvent: function (unit, generator) {
-
 				var list = root.getBaseData().getClassList();
 				var cls = list.getDataFromId(unit.custom.classChangeLevel.classId);
 				if (this._coreAttack.isRealBattle()) {
@@ -154,7 +154,7 @@
 			_dynamicEvent: null,
 
 			enterFlowEntry: function (coreAttack) {
-				
+
 				var attackFlow = coreAttack.getAttackFlow();
 				var order = attackFlow.getAttackOrder();
 
