@@ -45,6 +45,7 @@
  * 
  * Without calling updateIndexArray, it would keep drawing the same portion of the map as before.
  * 
+ * 21/02/2023 Version 1.01 Bugfix if session was null
  * 
  * Plugin by Nelow/Lyn
  * */
@@ -53,7 +54,8 @@
 var NL_mapColour01 = MapLayer.drawMapLayer;
 MapLayer.drawMapLayer = function () {
     NL_mapColour01.call(this);
-    if (MapColour._drawMapColourCheck === true) {
+    var session = root.getCurrentSession();
+    if (session !== null && MapColour._drawMapColourCheck === true) {
         MapColour._drawMapColour();     
     }
 };
