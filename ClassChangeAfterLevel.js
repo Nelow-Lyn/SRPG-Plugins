@@ -61,12 +61,13 @@
 				if (typeof this._unit.custom.classChangeLevel === 'undefined' || this._unit.custom.classChangeLevel.reachedLevel !== true) {
 					return EnterResult.NOTENTER;
 				}
-				if (this._coreAttack.isRealBattle()) {
-					this._changeClassAnime();
-				}
+
 				if (this.isFlowSkip() || coreAttack.isBattleCut()) {
 					this._doSkipAction();
 					return EnterResult.NOTENTER;
+				}
+				if (this._coreAttack.isRealBattle()) {
+					this._changeClassAnime();
 				}
 				
 				this._dynamicEvent = createObject(DynamicEvent);
@@ -288,7 +289,9 @@
 		this._skipLevelUp = false;
 		this._growthArray = ExperienceControl.obtainExperience(this._unit, this._getExp);
 		this._experienceNumberView.setExperienceNumberData(this._unit, this._getExp);
-		if (typeof this._unit.custom.classChangeLevel === "object" && this._unit.custom.classChangeLevel.level === this._unit.getLv()) {
+		if (typeof this._unit.custom.classChangeLevel === 'object' && this._unit.custom.classChangeLevel.level === this._unit.getLv()) {
+			root.log("leveltest2");
+			root.log(this._unit.custom.classChangeLevel.level + " " + this._unit.getLv());
 			this._skipLevelUp = true;
 			this._unit.setLv(1);
 			this._unit.custom.classChangeLevel.reachedLevel = true;
