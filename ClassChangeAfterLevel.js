@@ -23,6 +23,7 @@
  * 
  *
  * Version 1.01 : Fixed playing an animation even when no custom parameters were set.
+ * Version 1.02 : Fixed some crashes on skips and enemy turn killing a player.
  * 
  * Plugin by Nelow/Lyn
  */
@@ -56,7 +57,9 @@
 				this._unit = attackFlow.getPlayerUnit();
 				var generator;
 				var attackFlow = coreAttack.getAttackFlow();
-
+				if (this._unit === null) {
+					return EnterResult.NOTENTER;
+                }
 
 				if (typeof this._unit.custom.classChangeLevel === 'undefined' || this._unit.custom.classChangeLevel.reachedLevel !== true) {
 					return EnterResult.NOTENTER;
@@ -164,6 +167,10 @@
 				var generator = root.getEventGenerator();
 				var attackFlow = coreAttack.getAttackFlow();
 
+				if (this._unit === null) {
+					return EnterResult.NOTENTER;
+				}
+
 				if (typeof this._unit.custom.classChangeLevel === 'undefined' || this._unit.custom.classChangeLevel.reachedLevel !== true) {
 					return EnterResult.NOTENTER;
                 }
@@ -192,7 +199,7 @@
 				var dummyunit = objectgen.generateUnitFromBaseUnit(unit);
 				var parameter = dummyunit.getGrowthBonus();
 				dummyunit.setAliveState(AliveType.ERASE);
-
+				root.log(parameter.getObjectType());
 				var addStats = false;
 				if (typeof this._unit.custom.classChangeLevel.addStats === 'boolean') {
 					addStats = this._unit.custom.classChangeLevel.addStats;
