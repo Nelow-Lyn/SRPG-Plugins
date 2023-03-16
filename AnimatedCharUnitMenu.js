@@ -29,7 +29,7 @@ UnitMenuTopWindow._drawUnitClass = function (xBase, yBase) {
 	unitRenderParam = StructureBuilder.buildUnitRenderParam();
 	unitRenderParam.direction = DirectionType.COUNT;
 	unitRenderParam.animationIndex = this._unitCounter.getAnimationIndexFromUnit(this._unit);
-	unitRenderParam.isScroll = true;
+	unitRenderParam.isScroll = false;
 	UnitRenderer.drawScrollUnit(this._unit, x, y, unitRenderParam);
 	TextRenderer.drawText(x + 45, y + 13, cls.getName(), length, color, font);
 };
