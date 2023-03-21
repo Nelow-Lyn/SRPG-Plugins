@@ -5,6 +5,9 @@
  * The color for the blackout can be customized with the
  * variable selectBlackoutColor in hex
  * 
+ *
+ *
+ * 21/03/2023 Fixed a bug by a weird artifact appearing on follow up events.
  * Plugin by Nelow/Lyn
  * 
  **/
@@ -33,9 +36,6 @@
 		color = selectBlackoutColor;
 		font = textui.getFont();
 		pic = textui.getUIImage();
-		pic.setAlpha(0);
-		pic.setColor(this._getNonActiveColor(), this._getNonActiveAlpha());
-
 
 		TextRenderer.drawFixedTitleText(x, y, text, color, font, TextFormat.CENTER, pic, 4);
 	};
