@@ -34,8 +34,3 @@ UnitMenuTopWindow._drawUnitClass = function (xBase, yBase) {
 	TextRenderer.drawText(x + 45, y + 13, cls.getName(), length, color, font);
 };
 })();
-
-
-			array.appendObject(UnitParameter.MOV);
-			array.appendObject(UnitParameter.BLD);
-			array.appendObject(UnitParameter.WLV);
