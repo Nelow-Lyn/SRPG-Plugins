@@ -23,7 +23,7 @@
 
 (function () {
 
-    var ScaleSelector = 3;
+    var ScaleSelector = 0;
 
     var IgnoreEngineMax = false;
 
@@ -74,7 +74,7 @@
         } else if (ScaleSelector === ScalingSelect.INCREASEEVERYXLEVEL) {
             max = max + Math.floor(level / EveryLevelConstant);
         }
-        //root.log("newMax: " + max + " engineMax: " + engineMax + "Param: " + this.getSignal());
+        root.log("newMax: " + max + " engineMax: " + engineMax + "Param: " + this.getSignal());
         return max;
 
     }
@@ -84,7 +84,11 @@
         var unit = itemTargetInfo.unit;
 
         // Save the current level before setting the unit level to 1.
-        unit.custom.savedClassChangeLevel += unit.getLv();
+        if (unit.custom.savedClassChangeLevel != null && typeof unit.custom.savedClassChangeLevel === 'number') {
+            unit.custom.savedClassChangeLevel += unit.getLv();
+        } else {
+            unit.custom.savedClassChangeLevel = unit.getLv();
+        }
 
         NL_ScalingMaxParameters02.call(this, itemTargetInfo);
     };
